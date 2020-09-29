@@ -1,10 +1,11 @@
+
 <h1 class="text-center d-block">Chat Room</h1>
 
 <div class="block block-rounded block-themed">
     <!-- Chat Header -->
 
     <div class="block-options">
-        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+        <button type="button" class="btn-block-option" id="chat-refresh" data-toggle="block-option" data-action="state_toggle"
                 data-action-mode="demo">
             <i class="si si-refresh"></i>
         </button>
@@ -30,3 +31,10 @@
 
 </div>
 <!-- END Chat Input -->
+<?php if (!empty(Yii::$app->user->identity->roles)) : ?>
+    <?php $this->registerJsFile('@web/js/admin-chat.js'); ?>
+<?php else : ?>
+    <?php $this->registerJsFile('@web/js/chat.js'); ?>
+<?php endif; ?>
+
+

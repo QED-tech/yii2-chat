@@ -28,10 +28,10 @@ class User extends ActiveRecord implements IdentityInterface
     public $roles;
 
 
-//    public function __construct()
-//    {
-//        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'saveRoles']);
-//    }
+    public function __construct()
+    {
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'saveRoles']);
+    }
 
 
     /**

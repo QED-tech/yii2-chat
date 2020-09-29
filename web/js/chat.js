@@ -1,8 +1,13 @@
 const chatInput = document.getElementById('chat-input');
 let chatBox = document.getElementById('chat-box')
 const usernameLink = document.getElementById('username')
+const chatRefreshButton = document.getElementById('chat-refresh')
 
 
+chatRefreshButton.addEventListener('click', () => {
+
+    renderChat()
+})
 
 const chatAddMessage = () => {
     const username = usernameLink.dataset['username']
