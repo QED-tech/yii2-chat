@@ -9,3 +9,21 @@
 ul {
     list-style-type: none;
 }
+
+.chat-message__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-message__date {
+    color: rgba(0, 0, 0, .7);
+}
+
+.chat-message__change-status {
+    padding: 0 20px 0 0;
+    cursor: pointer;
+}
+
+.admin-message {
+    background-color: #6dc171 !important;
+}

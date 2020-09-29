@@ -17,8 +17,11 @@ use yii\helpers\Url;
 
 
             <?php if (!Yii::$app->user->isGuest) : ?>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= Url::to('user/logout') ?>">Разлогиниться (<?= Yii::$app->user->identity->username ?>)</a>
+                    <a class="nav-link" id="username" data-username="<?= Yii::$app->user->identity->username ?>" href="<?= Url::to('user/logout') ?>">
+                        Разлогиниться (<?= Yii::$app->user->identity->username ?>)
+                    </a>
                 </li>
             <?php endif ?>
 

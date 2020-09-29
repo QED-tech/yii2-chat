@@ -13,7 +13,7 @@ $config = [
     'defaultRoute' => 'home/index',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -21,15 +21,19 @@ $config = [
             'cookieValidationKey' => 'RnN3j1KEwXOpTtGhMNZ8zwUGYpfPmgXl',
             'baseUrl' => ''
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager'
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
+            'loginUrl' => ['login'],
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'home/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -58,6 +62,13 @@ $config = [
             ],
         ],
 
+    ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'layout' => 'admin',
+            'defaultRoute' => 'main/index',
+        ],
     ],
     'params' => $params,
 ];

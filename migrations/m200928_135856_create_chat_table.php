@@ -15,21 +15,13 @@ class m200928_135856_create_chat_table extends Migration
         $this->createTable('{{%chat}}', [
             'id' => $this->primaryKey(),
             'text' => $this->text(),
-            'is_correct' => $this->integer()->notNull(),
-            'author_id' => $this->smallInteger(),
-
-            'created_at' => $this->dateTime()
+            'is_correct' => $this->integer()->notNull()->defaultValue(1),
+            'is_admin' => $this->integer()->notNull()->defaultValue(0),
+            'username' => $this->text()->notNull(),
+            'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')
         ]);
 
 
-        $this->addForeignKey(
-            'fk-chat-author_id',
-            'chat',
-            'author_id',
-            'user',
-            'id',
-            'CASCADE'
-        );
     }
 
     /**

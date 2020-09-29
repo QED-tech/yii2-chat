@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -22,12 +23,30 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+
+    const ROLE_ADMIN = 'admin';
+    public $roles;
+
+
+//    public function __construct()
+//    {
+//        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'saveRoles']);
+//    }
+
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'user';
+    }
+
+    public function rules()
+    {
+        return [
+            ['roles', 'safe']
+        ];
     }
 
 
@@ -62,8 +81,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
 
-
-
     public static function findIdentity($id)
     {
         return static::findOne($id);
@@ -87,5 +104,40 @@ class User extends ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
+    }
+
+
+
+    public function getRolesDropdown()
+    {
+        return [
+            self::ROLE_ADMIN => 'Admin'
+        ];
+    }
+
+    public function saveRoles()
+    {
+        Yii::$app->authManager->revokeAll($this->getId());
+
+        if (is_array($this->roles)) {
+            foreach ($this->roles as $roleName) {
+                if ($role = Yii::$app->authManager->getRole($roleName)) {
+                    Yii::$app->authManager->assign($role, $this->getId());
+                }
+            }
+        }
+
+    }
+
+
+    public function afterFind()
+    {
+        $this->roles = $this->getRoles();
+    }
+
+    public function getRoles()
+    {
+        $roles = Yii::$app->authManager->getRolesByUser($this->getId());
+        return ArrayHelper::getColumn($roles, 'name', false);
     }
 }
